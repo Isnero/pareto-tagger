@@ -1,0 +1,6 @@
+[project]
+name = "pareto-tagger"
+version = "0.1.0"
+description = "Multi-label LLM classifier for IT support tickets with Pareto report generation"
+requires-python = ">=3.12"
+dependencies = []
