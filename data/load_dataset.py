@@ -1,28 +1,12 @@
 import hashlib
 import json
-
 from pathlib import Path
 
 import pandas as pd
+import yaml
 from datasets import load_dataset
 
 CACHE_PATH = Path(__file__).parent / "cache" / "filtered.parquet"
-
-VALID_TAGS = {
-    "Security",
-    "Performance",
-    "Disruption",
-    "Crash",
-    "Network",
-    "Documentation",
-    "Feature",
-    "Hardware",
-    "Software",
-    "Product",
-    "Integration",
-    "Marketing",
-    "Sales",
-}
 
 ALLOWED_QUEUES = {
     "Technical Support",
@@ -39,6 +23,16 @@ CONTAMINATION_PREFIXES = (
 )
 
 TAG_COLUMNS = [f"tag_{i}" for i in range(1, 9)]
+
+
+def _load_taxonomy() -> set[str]:
+    taxonomy_path = Path(__file__).parent / "taxonomy.yaml"
+    with open(taxonomy_path) as file:
+        data = yaml.safe_load(file)
+    return set(data["tags"])
+
+
+VALID_TAGS = _load_taxonomy()
 
 
 def load() -> pd.DataFrame:
@@ -93,8 +87,11 @@ def load() -> pd.DataFrame:
     )
 
     # Filter 6: drop zero tag tickets
-    df = df[df["tags"].str.len() > 0]
+    df = df[df["tags"].apply(len) > 0]
     print(f"After taxonomy trim and zero tag drop: {len(df)}")
+
+    # Drop helper columns and reorder
+    df = df[["ticket_id", "subject", "body", "type", "queue", "priority", "tags"]]
 
     CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
     df.to_parquet(CACHE_PATH, index=False)
