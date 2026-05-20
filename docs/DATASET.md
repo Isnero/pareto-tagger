@@ -19,11 +19,11 @@ Six filters in `data/load_dataset.py`, applied in order:
 
 | Step | Tickets remaining |
 | --- | --- |
-| Raw English tickets | ~30,000 |
-| After queue filter | 17,893 |
-| After contamination filter (~100 dropped) | ~17,793 |
-| After dedup | TBD at implementation |
-| After taxonomy trim and zero-tag drop (~443 dropped) | ~16,500 |
+| Raw English tickets | 28261 |
+| After queue filter | 17893 |
+| After contamination filter | 17866 |
+| After deduplication | 15035 |
+| After taxonomy trim and zero-tag drop | 14612 |
 
 ### Filter 3: support-agent reply contamination
 

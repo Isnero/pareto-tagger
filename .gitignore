@@ -219,3 +219,6 @@ __marimo__/
 
 # VS Code workspace settings
 *.code-workspace
+
+# Data cache folder
+data/cache
