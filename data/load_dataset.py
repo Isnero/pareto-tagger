@@ -1,10 +1,13 @@
 import hashlib
 import json
+import logging
 from pathlib import Path
 
 import pandas as pd
 import yaml
 from datasets import load_dataset
+
+logger = logging.getLogger(__name__)
 
 CACHE_PATH = Path(__file__).parent / "cache" / "filtered.parquet"
 
@@ -37,28 +40,28 @@ VALID_TAGS = _load_taxonomy()
 
 def load() -> pd.DataFrame:
     if CACHE_PATH.exists():
-        print("Loading from cache")
+        logger.info("Loading from cache")
         return pd.read_parquet(CACHE_PATH)
 
-    print("Downloading dataset")
+    logger.info("Downloading dataset")
     dataset = load_dataset("Tobi-Bueck/customer-support-tickets", split="train")
     df = dataset.to_pandas()
 
     df["ticket_id"] = range(len(df))
-    print(f"Raw rows: {len(df)}")
+    logger.info("Raw rows: %d", len(df))
 
     # Filter 1: English only
     df = df[df["language"] == "en"]
-    print(f"After language filter: {len(df)}")
+    logger.info("After language filter: %d", len(df))
 
     # Filter 2: IT queues only
     df = df[df["queue"].isin(ALLOWED_QUEUES)]
-    print(f"After queue filter: {len(df)}")
+    logger.info("After queue filter: %d", len(df))
 
     # Filter 3: Drop contamination
     mask = df["body"].str.startswith(CONTAMINATION_PREFIXES)
     df = df[~mask]
-    print(f"After contamination filter: {len(df)}")
+    logger.info("After contamination filter: %d", len(df))
 
     # Filter 4: Deduplicate on (subject, body) hash
     df["content_hash"] = df.apply(
@@ -68,7 +71,7 @@ def load() -> pd.DataFrame:
         axis=1,
     )
     df = df.drop_duplicates(subset=["content_hash"])
-    print(f"After deduplication: {len(df)}")
+    logger.info("After deduplication: %d", len(df))
 
     # Reshape: melt tag_1 to tag_8 into a single tags column
     melted = (
@@ -88,13 +91,13 @@ def load() -> pd.DataFrame:
 
     # Filter 6: drop zero tag tickets
     df = df[df["tags"].apply(len) > 0]
-    print(f"After taxonomy trim and zero tag drop: {len(df)}")
+    logger.info("After taxonomy trim and zero tag drop: %d", len(df))
 
     # Drop helper columns and reorder
     df = df[["ticket_id", "subject", "body", "type", "queue", "priority", "tags"]]
 
     CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
     df.to_parquet(CACHE_PATH, index=False)
-    print("Saved to cache")
+    logger.info("Saved to cache")
 
     return df
