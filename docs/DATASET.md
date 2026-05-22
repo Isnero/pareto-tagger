@@ -168,6 +168,14 @@ If real ServiceNow data ever becomes available, work_notes and resolution_notes 
 
 In the filtered corpus: 49% high, 38% medium, 13% low. The skew is a synthetic-data artifact. Because "high" covers half the data, it is not a meaningful slice cut. Eval slicing uses "low" (13%) instead.
 
+## Ground truth labeling workflow, v1
+
+v1 ground truth uses inherited labels from the source dataset, trimmed to the 13-tag taxonomy by `data/load_dataset.py`. No manual re-labeling at the row level.
+
+Quality is validated by a 30-ticket spot check (see `evals/ground_truth/spot_check_v1.md`). The per-ticket issue rate from the spot check is the headline noise measurement for v1.
+
+Per-row labeling fields (`labelled_by`, `labelled_at`, `review_notes`) are present in the schema but unpopulated in v1. They are reserved for future ground truth versions (v2+) if a full manual labeling pass is done.
+
 ## Synthetic data caveat
 
 Tickets are LLM-generated. Real production tickets contain noise that this dataset does not have:
