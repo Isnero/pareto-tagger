@@ -371,14 +371,18 @@ Format:
 
 ```json
 {
-  "id": "tk_0042",
-  "subject": "Database connection pool exhausted",
-  "body": "Production database prod-db-01 is rejecting connections...",
-  "true_tags": ["Crash", "Database", "Performance"],
-  "review_notes": null,
-  "labelled_at": "2026-05-12",
+  "ticket_id": 149,
+  "subject": "Image Distortion on Projector Across Multiple Devices",
+  "body": "Dear Customer Support Team,\n\nI am reaching out...",
+  "type": "Incident",
+  "queue": "Product Support",
+  "priority": "low",
+  "true_tags": ["Hardware", "Performance", "Disruption"],
+  "sampled_at": "2026-05-22",
   "labelled_by": "ks",
-  "slice_tags": ["short", "high_priority"]
+  "labelled_at": null,
+  "review_notes": null,
+  "slice_tags": ["short", "low_priority"]
 }
 ```
 

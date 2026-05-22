@@ -43,10 +43,18 @@ def generate_ground_truth() -> pd.DataFrame:
 def save_to_jsonl(df: pd.DataFrame) -> None:
     df = df.copy()
     df = df.rename(columns={"tags": "true_tags"})
-    df["review_notes"] = None
-    df["labelled_at"] = pd.Timestamp.now().strftime("%Y-%m-%d")
+    df["sampled_at"] = pd.Timestamp.now().strftime("%Y-%m-%d")
     df["labelled_by"] = "ks"
-    df["slice_tags"] = [[] for _ in range(len(df))]
+    df["labelled_at"] = None
+    df["review_notes"] = None
+    df["slice_tags"] = df.apply(
+        lambda row: (
+            (["short"] if len(row["body"]) < 200 else [])
+            + (["long"] if len(row["body"]) > 600 else [])
+            + (["low_priority"] if row["priority"] == "low" else [])
+        ),
+        axis=1,
+    )
 
     JSONL_PATH.parent.mkdir(parents=True, exist_ok=True)
     df.to_json(JSONL_PATH, orient="records", lines=True)

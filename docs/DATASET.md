@@ -164,6 +164,10 @@ Decision: subject and body only. The model predicts what the customer reported, 
 
 If real ServiceNow data ever becomes available, work_notes and resolution_notes are richer signals than this synthetic answer field.
 
+## Priority distribution
+
+In the filtered corpus: 49% high, 38% medium, 13% low. The skew is a synthetic-data artifact. Because "high" covers half the data, it is not a meaningful slice cut. Eval slicing uses "low" (13%) instead.
+
 ## Synthetic data caveat
 
 Tickets are LLM-generated. Real production tickets contain noise that this dataset does not have:

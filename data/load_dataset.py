@@ -40,12 +40,15 @@ VALID_TAGS = _load_taxonomy()
 
 def load() -> pd.DataFrame:
     if CACHE_PATH.exists():
-        logger.info("Loading from cache")
+        logger.info("Loading from cache. Delete %s to rebuild.", CACHE_PATH)
         return pd.read_parquet(CACHE_PATH)
 
     logger.info("Downloading dataset")
     dataset = load_dataset("Tobi-Bueck/customer-support-tickets", split="train")
     df = dataset.to_pandas()
+
+    df["body"] = df["body"].str.replace(r"\n", "\n", regex=False)
+    df["subject"] = df["subject"].str.replace(r"\n", "\n", regex=False)
 
     df["ticket_id"] = range(len(df))
     logger.info("Raw rows: %d", len(df))
@@ -58,8 +61,8 @@ def load() -> pd.DataFrame:
     df = df[df["queue"].isin(ALLOWED_QUEUES)]
     logger.info("After queue filter: %d", len(df))
 
-    # Filter 3: Drop contamination
-    mask = df["body"].str.startswith(CONTAMINATION_PREFIXES)
+    # Filter 3: Drop contamination, fill NaN bodies with empty string for the filter
+    mask = df["body"].fillna("").str.startswith(CONTAMINATION_PREFIXES)
     df = df[~mask]
     logger.info("After contamination filter: %d", len(df))
 
@@ -101,3 +104,10 @@ def load() -> pd.DataFrame:
     logger.info("Saved to cache")
 
     return df
+
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+    df = load()
+    print(f"Final dataset: {len(df)} rows")
+    print(df.head())
