@@ -28,9 +28,9 @@ The marketing firm faced several product integration issues, leading to interrup
 
 **Current true_tags:** ['Disruption', 'Software']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Could add also Integration tag, not huge but it was mentioned in description itself - tag wasn't there in original data so that's something I will add. Original: Bug, Disruption, Compatibility, Software, IT, Tech Support.
 
 ---
 
@@ -48,9 +48,9 @@ Customer Support, I am reporting an issue with the digital tools provided to the
 
 **Current true_tags:** ['Crash', 'Performance', 'Software']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -68,9 +68,9 @@ Hello Customer Support, I hope this message finds you well. I am experiencing an
 
 **Current true_tags:** ['Product']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -88,9 +88,17 @@ Dear Support Team, I am facing difficulties with the synchronization of my digit
 
 **Current true_tags:** ['Integration']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Could add Network, orginally there was Firewall so can add rule to change firewall to network. Original tag list:
+Technical,
+Bug,
+Integration,
+API,
+Firewall,
+Server,
+Account,
+Resolution.
 
 ---
 
@@ -108,9 +116,9 @@ Here is a concise description of the issue: Integration failure with Sony Vegas 
 
 **Current true_tags:** ['Integration', 'Software', 'Product', 'Crash', 'Documentation']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -128,9 +136,9 @@ Could you provide more information on integrating the Evernote project managemen
 
 **Current true_tags:** ['Feature', 'Documentation']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -148,9 +156,9 @@ Campaign performance data vanished unexpectedly likely due to integration glitch
 
 **Current true_tags:** ['Integration', 'Performance']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -168,9 +176,9 @@ The project data has disappeared unexpectedly, likely because of a glitch in the
 
 **Current true_tags:** ['Feature', 'Crash', 'Documentation']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Feature is wrong
 
 ---
 
@@ -188,9 +196,9 @@ May I assist with your issue regarding robot mowers? Please share any details ab
 
 **Current true_tags:** ['Product', 'Feature']
 
-**Verdict:** 
+**Verdict:** this should be contaminated
 
-**Notes:** 
+**Notes:** this should be contaminated
 
 ---
 
@@ -208,9 +216,9 @@ Is it possible to provide comprehensive documentation on the AR-Brille compatibi
 
 **Current true_tags:** ['Documentation', 'Feature']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -228,9 +236,9 @@ Customer Support is seeking information about the advanced analytics tools offer
 
 **Current true_tags:** ['Product', 'Documentation', 'Feature']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -248,9 +256,9 @@ An unexpected outage is impacting vital tools. Potential reasons could be networ
 
 **Current true_tags:** ['Network', 'Performance']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -268,9 +276,9 @@ Customer Support, recently, our marketing initiatives have seen a decline, which
 
 **Current true_tags:** ['Sales']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -288,9 +296,9 @@ Our customer support team is seeking help with updating and optimizing our digit
 
 **Current true_tags:** ['Product', 'Feature']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -308,9 +316,9 @@ A marketing agency is facing integration problems with the Logitech K780 Keyboar
 
 **Current true_tags:** ['Performance', 'Product', 'Feature']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Not sure about Feature, shouldn't be there.
 
 ---
 
@@ -328,9 +336,9 @@ Hello Customer Support, I am contacting you to seek information on integrating n
 
 **Current true_tags:** ['Integration', 'Marketing']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -348,9 +356,9 @@ Marketing campaigns are not achieving the anticipated increase in brand engageme
 
 **Current true_tags:** ['Sales', 'Marketing', 'Performance']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Performance should be locked to IT systems only.
 
 ---
 
@@ -368,9 +376,9 @@ The digital marketing campaign resulted in inconsistent brand messaging across v
 
 **Current true_tags:** ['Marketing']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -388,9 +396,12 @@ A financial organization encountered system performance issues. These slowdowns 
 
 **Current true_tags:** ['Performance', 'Hardware']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Could add software maybe? Add rule to match software conflict with software general tag. Original tags:
+Performance,
+Hardware,
+Software Conflict.
 
 ---
 
@@ -408,9 +419,14 @@ I am writing to report an issue where my project data has mysteriously disappear
 
 **Current true_tags:** ['Crash', 'Documentation']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Could add Software or even Product, but not much data to back it up. Original tags:
+Technical,
+Bug,
+Crash,
+Resolution,
+Documentation.
 
 ---
 
@@ -428,9 +444,9 @@ Seeking to understand the integration options available for the TensorFlow SaaS 
 
 **Current true_tags:** ['Feature', 'Documentation']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -448,9 +464,9 @@ Can you provide an overview of the scalable SaaS features and their benefits for
 
 **Current true_tags:** ['Feature', 'Documentation', 'Sales']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Is sales really for project management? I mean it could be I'm just not sure.
 
 ---
 
@@ -477,9 +493,17 @@ Sincerely, [Your Name]
 
 **Current true_tags:** ['Security', 'Crash', 'Documentation']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** DOcumentation wrong, not asking for anything explicitly only mentioned that breach was documented. Original tags:
+Security,
+Breach,
+Outage,
+Maintenance,
+Crash,
+Documentation,
+Resolution,
+Incident,
 
 ---
 
@@ -497,9 +521,9 @@ The data analytics platform experienced a crash during investment optimization t
 
 **Current true_tags:** ['Crash', 'Performance']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Performance shouldn't be there as it's not working, clearly stated platform remains unusable. Should be Disruption but that's newly added tag by me. Could add Product because i imagine this platform is self developed.
 
 ---
 
@@ -517,9 +541,9 @@ The process of data encryption has unexpectedly stopped functioning, which might
 
 **Current true_tags:** ['Security', 'Crash']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -537,9 +561,9 @@ Enhance Shopify brand growth through digital strategies such as SEO and social m
 
 **Current true_tags:** ['Sales', 'Feature']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -557,9 +581,9 @@ The marketing firm is experiencing a decline in brand growth through various dig
 
 **Current true_tags:** ['Sales', 'Marketing', 'Product', 'Feature']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -577,9 +601,9 @@ Dear Customer Support, I am experiencing issues with the dashboard that have led
 
 **Current true_tags:** ['Crash', 'Disruption', 'Documentation']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -601,9 +625,9 @@ The services reliant on medical devices are essential for patient monitoring and
 
 **Current true_tags:** ['Disruption', 'Hardware', 'Security']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -621,8 +645,8 @@ Hello Customer Support, I am writing to ask about the system requirements for th
 
 **Current true_tags:** ['Product', 'Performance', 'Hardware', 'Software']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Not sure about Hardware and Software, this could be restricted to not working only not as asking for performance boost. But i'm not sure if that's worth. It still touch this areas so could be full agree.
 
 ---
