@@ -7,10 +7,11 @@ Reviewer: ks
 
 ## Results
 
-- Agree: 
-- Partial: 
-- Disagree: 
-- Per-ticket issue rate: 
+- Agree: 18
+- Partial: 11
+- Disagree: 1
+- Contamination (separate category, filter 3 bypass): 1
+- Per-ticket issue rate: 40% (12/30, includes contamination)
 
 ## Per-ticket notes
 

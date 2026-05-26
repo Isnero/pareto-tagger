@@ -50,7 +50,8 @@ Tags: Security
 
 ### Performance
 
-Use when the system runs but slowly, lags, or has degraded responsiveness. The system is up but not working as expected.
+Use when an IT system or software application runs but slowly, lags, or has degraded responsiveness. The system is up but not working as expected.
+Does NOT apply to business-metric performance such as marketing campaign performance, conversion rates, sales pipeline performance, or brand engagement. Those are Marketing or Sales depending on context.
 
 **Example tickets:**
 
@@ -63,6 +64,13 @@ Tags: Performance, Disruption
 > Body: Experiencing a slowdown in the reporting system, which is believed to be caused by recent digital marketing strategies deployed by the agency.
 
 Tags: Performance, Marketing
+
+**Negative example (do NOT tag as Performance):**
+
+> Subject: Marketing Campaigns Not Performing Well
+> Body: Our marketing campaigns are not performing as expected.
+
+Tags: Marketing (not Performance). "Performing" here refers to business outcomes, not system responsiveness.
 
 **Distinction from Crash and Disruption:**
 

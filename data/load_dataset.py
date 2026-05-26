@@ -38,6 +38,31 @@ def _load_taxonomy() -> set[str]:
 VALID_TAGS = _load_taxonomy()
 
 
+# Tag rewrites: map source-dataset tags to canonical taxonomy tags
+# before the trim step drops everything else.
+# Each rewrite is documented in docs/DATASET.md with rationale.
+TAG_REWRITES = {
+    "Firewall": "Network",
+    "Software Conflict": "Software",
+    "Compatibility": "Integration",
+    "Outage": "Disruption",
+}
+
+
+def apply_tag_rewrites(tags: list[str]) -> list[str]:
+    """Rewrite source tags to canonical taxonomy tags.
+    Deduplicates after rewrite since two source tags can map to one canonical tag."""
+    rewritten = [TAG_REWRITES.get(t, t) for t in tags]
+    # dedupe preserving order
+    seen = set()
+    out = []
+    for t in rewritten:
+        if t not in seen:
+            seen.add(t)
+            out.append(t)
+    return out
+
+
 def load() -> pd.DataFrame:
     if CACHE_PATH.exists():
         logger.info("Loading from cache. Delete %s to rebuild.", CACHE_PATH)
@@ -87,7 +112,19 @@ def load() -> pd.DataFrame:
 
     df = df.drop(columns=TAG_COLUMNS).merge(tags_per_ticket, on="ticket_id")
 
-    # Filter 5: trim to 13 tag taxonomy
+    # FIlter 5a: rewrite source tags to canonical taxonomy tags
+    df["tags"] = df["tags"].apply(apply_tag_rewrites)
+    rewrite_hits = (
+        df["tags"]
+        .apply(lambda tags: any(t in TAG_REWRITES.values() for t in tags))
+        .sum()
+    )
+    logger.info(
+        "After tag rewrites: %d (tickets touched is upper-bounded by this)",
+        rewrite_hits,
+    )
+
+    # Filter 5b: trim to 13 tag taxonomy
     df["tags"] = df["tags"].apply(
         lambda tags: [tag for tag in tags if tag in VALID_TAGS]
     )
