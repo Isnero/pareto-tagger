@@ -15,7 +15,6 @@ class Tag(str, Enum):
     PRODUCT = "Product"
     INTEGRATION = "Integration"
     MARKETING = "Marketing"
-    SALES = "Sales"
 
 
 class TicketClassification(BaseModel):

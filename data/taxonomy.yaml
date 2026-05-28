@@ -1,4 +1,4 @@
-version: 1
+version: 2
 tags:
   - Security
   - Performance
@@ -12,4 +12,3 @@ tags:
   - Product
   - Integration
   - Marketing
-  - Sales

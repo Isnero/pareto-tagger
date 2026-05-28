@@ -22,7 +22,6 @@ CONTAMINATION_PREFIXES = (
     "Thank you for contacting us",
     "Would you like",
     "To better understand your",
-    "Customer support has documented",
     "May I assist with your issue regarding",
 )
 
@@ -45,8 +44,8 @@ VALID_TAGS = _load_taxonomy()
 TAG_REWRITES = {
     "Firewall": "Network",
     "Software Conflict": "Software",
-    "Compatibility": "Integration",
     "Outage": "Disruption",
+    "Sales": "Marketing",
 }
 
 
@@ -89,8 +88,15 @@ def load() -> pd.DataFrame:
 
     # Filter 3: Drop contamination, fill NaN bodies with empty string for the filter
     mask = df["body"].fillna("").str.startswith(CONTAMINATION_PREFIXES)
+    removed = df[mask][["ticket_id", "subject", "body"]]
+    removed.to_json(
+        CACHE_PATH.parent / "contamination_removed.jsonl",
+        orient="records",
+        lines=True,
+        force_ascii=False,
+    )
     df = df[~mask]
-    logger.info("After contamination filter: %d", len(df))
+    logger.info("After contamination filter: %d (removed %d)", len(df), len(removed))
 
     # Filter 4: Deduplicate on (subject, body) hash
     df["content_hash"] = df.apply(
@@ -114,15 +120,11 @@ def load() -> pd.DataFrame:
     df = df.drop(columns=TAG_COLUMNS).merge(tags_per_ticket, on="ticket_id")
 
     # FIlter 5a: rewrite source tags to canonical taxonomy tags
+    df["tags_before"] = df["tags"]
     df["tags"] = df["tags"].apply(apply_tag_rewrites)
-    rewrite_hits = (
-        df["tags"]
-        .apply(lambda tags: any(t in TAG_REWRITES.values() for t in tags))
-        .sum()
-    )
+    df["rewritten"] = df["tags_before"] != df["tags"]
     logger.info(
-        "After tag rewrites: %d (tickets touched is upper-bounded by this)",
-        rewrite_hits,
+        "After tag rewrites: %d tickets actually changed", int(df["rewritten"].sum())
     )
 
     # Filter 5b: trim to 13 tag taxonomy
@@ -133,6 +135,14 @@ def load() -> pd.DataFrame:
     # Filter 6: drop zero tag tickets
     df = df[df["tags"].apply(len) > 0]
     logger.info("After taxonomy trim and zero tag drop: %d", len(df))
+
+    # Write rewrites trace for spot-check targeting and verification
+    df[df["rewritten"]][["ticket_id", "tags_before", "tags"]].to_json(
+        CACHE_PATH.parent / "rewrites_applied.jsonl",
+        orient="records",
+        lines=True,
+        force_ascii=False,
+    )
 
     # Drop helper columns and reorder
     df = df[["ticket_id", "subject", "body", "type", "queue", "priority", "tags"]]

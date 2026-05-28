@@ -13,14 +13,13 @@ For data noise stats and how this taxonomy was derived, see `docs/DATASET.md`. F
 | Disruption | A service is interrupted but not necessarily fully down. Includes outages, slowdowns severe enough to halt work, and partial unavailability |
 | Crash | A specific application or system stopped running, errored out, or became unresponsive |
 | Network | Connectivity issues, firewall problems, API rate limits, routing problems |
-| Documentation | The ticket asks for docs, guides, references, or explanations |
+| Documentation | The ticket explicitly asks for docs, guides, references, or how-to information. Not closing boilerplate |
 | Feature | The ticket requests new capability, enhancement of existing capability, or feature integration |
 | Hardware | Physical equipment is failing or needs attention. Servers, devices, peripherals, networking gear |
 | Software | A specific software product or version is causing the issue. Use when the body names software (SAP, Excel, JIRA, etc.) and ties the issue to that software |
 | Product | A specific product the company sells or supports has an issue. Distinct from Software in that Product refers to the customer's relationship with what the company offers |
 | Integration | Connecting two systems, APIs, or platforms. Anything about plugging X into Y |
-| Marketing | Marketing strategy, campaign performance, brand growth, digital strategy, advertising |
-| Sales | Sales operations, lead generation, conversion tracking, sales tools, CRM |
+| Marketing | Marketing and sales topics: strategy, campaign performance, brand growth, advertising, lead generation, conversion tracking, sales tools, CRM |
 
 ## Tag definitions and examples
 
@@ -178,6 +177,9 @@ Tags: Documentation, Security
 - "Your docs are wrong about X": Documentation (still about docs, even if it is a complaint)
 - "I read the docs and the system still does not work": probably not Documentation, focus on the actual problem
 
+**Negative clause (added v2):**
+> Documentation applies only when the ticket explicitly requests guides, references, API docs, tutorials, or how-to information. It does NOT apply to closing boilerplate such as "let me know if you need more details," "I can provide further information," or "please advise on next steps." That phrasing is a politeness convention, not a documentation request. A ticket reporting a login failure or a sync error that ends with "let me know if you need more info" is not a Documentation ticket.
+
 ---
 
 ### Feature
@@ -189,7 +191,7 @@ Use for requests for new capability, enhancement of existing capability, or feat
 > Subject: Request for Enhancement in Salesforce CRM Data Analytics Tools Integration
 > Body: I would like to see advanced features such as automated data tracking and customizable reports.
 
-Tags: Feature, Integration, Sales
+Tags: Feature, Integration, Marketing
 
 > Subject: Optimization of Investment Data Analytics Workflow
 > Body: Need to integrate tools such as Nuendo, Plex, and Google Cloud for improved efficiency.
@@ -297,7 +299,9 @@ Tags: Integration, Software, Security
 
 ### Marketing
 
-Use for marketing strategy, campaign performance, brand growth, digital strategy, advertising.
+Use for marketing and sales topics: brand strategy, campaign performance, brand growth, advertising, digital strategy, lead generation, conversion tracking, sales tools, and CRM operations.
+
+This tag was originally split into Marketing and Sales. They were merged in taxonomy v2 because the source labels did not draw the boundary consistently. The same intake template appeared tagged Sales on one ticket and Marketing on a near-identical other, so the distinction was unlearnable. One tag now covers both.
 
 **Example tickets:**
 
@@ -309,36 +313,25 @@ Tags: Marketing, Feature
 > Subject: Marketing Campaigns Not Performing Well
 > Body: Our marketing campaigns are not performing as expected. Despite attempts to adjust ad spending and update materials, the results have not improved.
 
-Tags: Marketing, Performance
-
-**Distinction from Sales:**
-
-- Marketing: brand awareness, campaigns, content strategy, advertising
-- Sales: lead generation, conversion, sales tools, CRM operations
-
-The line is real. A "low conversion rate on landing pages" ticket is Sales (conversion focus). A "low engagement on social posts" ticket is Marketing (awareness focus).
-
----
-
-### Sales
-
-Use for sales operations, lead generation, conversion tracking, sales tools, CRM operations.
-
-**Example tickets:**
+Tags: Marketing
 
 > Subject: Challenges in Lead Generation Tracking
 > Body: Facing difficulties with lead generation conversion tracking across various digital platforms.
 
-Tags: Sales, Integration
+Tags: Marketing, Integration
 
 > Subject: Inquiry About Data Analytics Solutions for Investment Strategies Optimization
 > Body: Seeking information on data analytics solutions
 
-Tags: Sales, Documentation
+Tags: Marketing, Documentation
 
-**Why this tag exists despite being IT-adjacent:**
+**Note on "performing":**
 
-The dataset's IT support queues include a meaningful chunk of sales-related tickets. Either real businesses route sales tooling questions to IT support, or the synthetic data generator does not separate them cleanly. Either way, dropping Sales would leave around 550 tickets with no valid tag at all (see `docs/DATASET.md` for the zero-tag analysis).
+"Campaign not performing" or "low conversion rate" is Marketing, not Performance. Performance covers system responsiveness only. Business-outcome language belongs here.
+
+**Why this tag covers sales-adjacent content:**
+
+The dataset's IT support queues include a meaningful chunk of sales and marketing tickets. Either real businesses route this content to IT support, or the synthetic data generator does not separate it cleanly. Dropping the tag entirely would leave around 550 tickets with no valid tag at all (see `docs/DATASET.md` for the zero-tag analysis). It is retained as a single merged category.
 
 ---
 
@@ -348,7 +341,7 @@ Some judgment calls worth recording so future-me does not relitigate them.
 
 **Disruption vs Outage.** Outage was in the original taxonomy. Dropped because every outage is also a disruption. Keeping both forced the model to learn an arbitrary distinction the labels did not consistently make. Disruption is the kept tag. If a ticket clearly describes total unavailability, still Disruption.
 
-**Sales vs Marketing.** Both kept. Manual review found tickets where they describe distinct concerns (campaign performance vs lead conversion). Combining them would lose signal.
+**Sales and Marketing.** Merged into a single Marketing tag in v2. They were separate in v1, but the source labels did not distinguish them consistently, so the boundary was unlearnable. See the Marketing section and CHANGELOG v2.
 
 **Bug.** Dropped. The original Bug tag was applied to software defects, marketing strategy failures, security incidents, and basically anything that did not work. No consistent semantic. Software, Crash, and Disruption cover the actual cases.
 

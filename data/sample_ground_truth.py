@@ -8,7 +8,7 @@ from data.load_dataset import load, VALID_TAGS
 logger = logging.getLogger(__name__)
 
 
-JSONL_PATH = Path(__file__).parent.parent / "evals" / "ground_truth" / "v1.jsonl"
+JSONL_PATH = Path(__file__).parent.parent / "evals" / "ground_truth" / "v2.jsonl"
 
 
 def generate_ground_truth() -> pd.DataFrame:

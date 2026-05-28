@@ -148,11 +148,10 @@ The two numbers measure different things. Per-ticket counts any ticket with one 
 
 ### Tags retained
 
-13 tags: Security, Performance, Disruption, Crash, Network, Documentation, Feature, Hardware, Software, Product, Integration, Marketing, Sales.
+12 tags: Security, Performance, Disruption, Crash, Network, Documentation, Feature, Hardware, Software, Product, Integration, Marketing.
 
-Sales was added back after the zero-tag investigation showed 7 of 10 zero-tag tickets were sales or marketing content where Sales was the right tag. Without it, those tickets had nothing to predict.
-
-Full per-tag definitions and worked examples in `docs/TAXONOMY.md`.
+Sales and Marketing were separate tags in v1. They were merged into a single Marketing tag in v2. The source labels did not distinguish them consistently (the same intake template appeared tagged Sales on one ticket and Marketing on a near-identical other), so the boundary was unlearnable. Merging removes that noise rather than asking the model to reproduce it. The merge is applied via TAG_REWRITES in data/load_dataset.py (Sales maps to Marketing).
+Full per-tag definitions and worked examples in docs/TAXONOMY.md.
 
 ## Why the answer field is not used
 

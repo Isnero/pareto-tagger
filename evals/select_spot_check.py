@@ -6,26 +6,26 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 
-V1_PATH = Path(__file__).parent / "ground_truth" / "v1.jsonl"
-OUTPUT_PATH = Path(__file__).parent / "ground_truth" / "spot_check_v1.md"
+GROUND_PATH = Path(__file__).parent / "ground_truth" / "v2.jsonl"
+OUTPUT_PATH = Path(__file__).parent / "ground_truth" / "spot_check_v2.md"
 REPO_ROOT = Path(__file__).parent.parent
 SEED = 67
 SAMPLE_SIZE = 30
 
 
 def main() -> None:
-    with open(V1_PATH) as file:
+    with open(GROUND_PATH) as file:
         rows = [json.loads(line) for line in file]
 
     random.seed(SEED)
     spot_check = random.sample(rows, SAMPLE_SIZE)
 
     lines = [
-        "# Spot check, v1 ground truth",
+        "# Spot check, v2 ground truth",
         "",
         f"Random seed: {SEED}",
         f"Sample size: {SAMPLE_SIZE}",
-        f"Source: {V1_PATH.relative_to(REPO_ROOT).as_posix()}",
+        f"Source: {GROUND_PATH.relative_to(REPO_ROOT).as_posix()}",
         "Reviewer: ks",
         "",
         "## Results",
