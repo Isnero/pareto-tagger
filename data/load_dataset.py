@@ -23,6 +23,7 @@ CONTAMINATION_PREFIXES = (
     "Would you like",
     "To better understand your",
     "Customer support has documented",
+    "May I assist with your issue regarding",
 )
 
 TAG_COLUMNS = [f"tag_{i}" for i in range(1, 9)]
