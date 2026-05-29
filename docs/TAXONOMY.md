@@ -1,6 +1,6 @@
 # Taxonomy
 
-13-tag closed taxonomy for multi-label classification. Tags below are the only valid prediction targets. Anything outside this list is a hallucination and should be retried.
+12-tag closed taxonomy for multi-label classification. Tags below are the only valid prediction targets. Anything outside this list is a hallucination and should be retried.
 
 For data noise stats and how this taxonomy was derived, see `docs/DATASET.md`. For the prediction prompt and Pydantic schema, see `docs/PROMPT_VERSIONING.md`.
 
@@ -41,8 +41,8 @@ Tags: Security
 
 **Edge cases:**
 
-- "We need to improve our security posture" with no specific incident: Security plus Documentation (they likely want guidance)
-- Security audit request: Security plus Documentation
+- "We need to improve our security posture" with no specific incident: Security (they likely want guidance)
+- Security audit request: Security
 - Password reset issue: not Security alone, this is usually Software or Product depending on the system
 
 ---
@@ -50,7 +50,7 @@ Tags: Security
 ### Performance
 
 Use when an IT system or software application runs but slowly, lags, or has degraded responsiveness. The system is up but not working as expected.
-Does NOT apply to business-metric performance such as marketing campaign performance, conversion rates, sales pipeline performance, or brand engagement. Those are Marketing or Sales depending on context.
+Does NOT apply to business-metric performance such as marketing campaign performance, conversion rates, sales pipeline performance, or brand engagement. Those are Marketing.
 
 **Example tickets:**
 
@@ -157,7 +157,7 @@ Tags: Security, Network
 
 ### Documentation
 
-Use when the ticket asks for documentation, guides, references, explanations, or how-to information.
+Used for a request for a written document, reference, specification, or set of requirements. Explicitly exclude requests for advice, recommendations, or best practices, those are Feature or map to the underlying problem.
 
 **Example tickets:**
 
@@ -166,10 +166,10 @@ Use when the ticket asks for documentation, guides, references, explanations, or
 
 Tags: Documentation, Integration
 
-> Subject: Seeking Guidance on Securing Medical Data Across Products and Services
-> Body: I am in need of guidance on securing medical data across various products and services. Could you provide information on practices and protocols?
+> Subject: System Requirements for Project Management SaaS
+> Body: I require details about the system requirements for your project management software... operating system compatibility, browser support, and any necessary hardware or software configurations?
 
-Tags: Documentation, Security
+Tags: Software, Hardware, Documentation
 
 **Edge cases:**
 
@@ -177,8 +177,20 @@ Tags: Documentation, Security
 - "Your docs are wrong about X": Documentation (still about docs, even if it is a complaint)
 - "I read the docs and the system still does not work": probably not Documentation, focus on the actual problem
 
-**Negative clause (added v2):**
-> Documentation applies only when the ticket explicitly requests guides, references, API docs, tutorials, or how-to information. It does NOT apply to closing boilerplate such as "let me know if you need more details," "I can provide further information," or "please advise on next steps." That phrasing is a politeness convention, not a documentation request. A ticket reporting a login failure or a sync error that ends with "let me know if you need more info" is not a Documentation ticket.
+**Negative clause:**
+> Documentation applies only when the customer asks for a written artifact: a guide, reference, API doc, tutorial, specification, or system requirements. It does NOT apply when the customer reports a malfunction and asks for help fixing it, even when they use phrases like "provide detailed steps," "guidance on how to fix," "a resolution," or "recommendations to resolve." A request to fix a broken thing is the underlying problem tag (Crash, Performance, Network, etc.), not Documentation. The test: would satisfying this ticket mean handing over a document, or doing technical work? If technical work, not Documentation.
+
+**Negative example tickets:**
+
+> Subject: Connection problems with QuickBooks Online
+> Body: ...After restarting the router and verifying the network settings, the issue still exists. We have gone through the API documentation.
+
+Tags: Network, Performance (NOT Documentation. "API documentation" here is a step already taken, not a request.)
+
+> Subject: Investment optimization output discrepancy
+> Body: ...Could you please provide a guide or solution to help us resolve this issue?
+
+Tags: Performance, Feature (NOT Documentation. "Guide or solution to resolve" is a fix request, not a document request.)
 
 ---
 
@@ -353,11 +365,22 @@ Some judgment calls worth recording so future-me does not relitigate them.
 
 ## Versioning
 
-This taxonomy is v1, locked at the start of the project. Changes require:
+Current taxonomy version: v3 (12 tags).
 
-1. New entry in `evals/ground_truth/CHANGELOG.md`
-2. New ground truth file `evals/ground_truth/v2.jsonl`
-3. New CI threshold calibration after re-running baseline measurements
-4. Updated worked examples in this document
+Taxonomy version tracks the ground truth version. They move together. A change to tag definitions, tag membership, or labeling rules bumps both, because the taxonomy is the contract the ground truth labels are scored against. They are not independent counters.
 
-The taxonomy is part of the eval contract. Silent changes to taxonomy without corresponding ground truth and threshold changes break the comparability of historical eval runs.
+### Version history
+
+- v1: 13 tags, locked at project start. Sales and Marketing separate.
+- v2: Sales folded into Marketing. 12 tags. Reflected in evals/ground_truth/v2.jsonl. Reason: source labels did not separate the two consistently, the boundary was unlearnable. See CHANGELOG.
+- v3: Documentation definition tightened. Tag membership unchanged at 12. Excludes fix-requests and advice-requests that the v1 and v2 labels misfiled as Documentation. Ground truth regeneration pending (evals/ground_truth/v3.jsonl), requires a Documentation-strip rewrite rule in data/load_dataset.py. See CHANGELOG.
+
+### Changing the taxonomy requires
+
+1. New entry in evals/ground_truth/CHANGELOG.md stating what changed and why
+2. New ground truth file evals/ground_truth/vN.jsonl, prior versions immutable once tagged
+3. Matching update to the TagEnum in apps/api/src/api/ai/schemas.py and to data/taxonomy.yaml, in the same commit, so the enum and the taxonomy never disagree
+4. New CI threshold calibration after re-running baselines, since per-tag floors are tied to the tag set
+5. Updated worked examples in this document
+
+A silent taxonomy change without the matching ground truth, enum, and threshold updates breaks the comparability of historical eval runs. Do not edit a locked vN.jsonl in place.

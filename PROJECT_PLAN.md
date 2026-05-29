@@ -50,7 +50,7 @@ After all filters the working dataset is around 16,500 tickets. Filters applied 
 2. `queue IN ('Technical Support', 'IT Support', 'Product Support', 'Service Outages and Maintenance')`
 3. Drop support-agent reply contamination (`body LIKE 'Thank you for contacting us%'` and similar patterns, around 100 tickets)
 4. Dedup on `(subject, body)` hash (count TBD at implementation)
-5. Trim tags to 13-tag taxonomy
+5. Trim tags to 12-tag taxonomy
 6. Drop tickets with zero kept tags after trim (around 443 tickets, 2.48%)
 
 Full noise analysis, taxonomy reasoning, and filter rationale in `docs/DATASET.md`. Tag definitions and edge cases in `docs/TAXONOMY.md`.
@@ -59,7 +59,7 @@ Full noise analysis, taxonomy reasoning, and filter rationale in `docs/DATASET.m
 
 ## Classification approach
 
-Single-stage multi-label classification. The model predicts between 1 and 4 tags from the closed 13-tag taxonomy for each ticket. A hard cap of 5 in the schema prevents tag-spam.
+Single-stage multi-label classification. The model predicts between 1 and 4 tags from the closed 12-tag taxonomy for each ticket. A hard cap of 5 in the schema prevents tag-spam.
 
 ### Why multi-label, not single-class
 
@@ -112,7 +112,6 @@ class Tag(str, Enum):
     PRODUCT = "Product"
     INTEGRATION = "Integration"
     MARKETING = "Marketing"
-    SALES = "Sales"
 
 class TicketClassification(BaseModel):
     tags: list[Tag] = Field(min_length=1, max_length=5)
@@ -187,7 +186,7 @@ class TicketClassification(BaseModel):
 | SQLAlchemy 2.0 async | Aligned with FastAPI async flow |
 | uv instead of pip or poetry | Fast package manager, current standard |
 | Single-stage multi-label, not hierarchical | Type and queue are orthogonal in this dataset, two stages added cost without accuracy gain |
-| Trimmed 13-tag taxonomy, not raw 20 tags | Manual review of 50 tickets found 56% had questionable tags. Trimmed taxonomy passes the noise floor |
+| Trimmed 12-tag taxonomy, not raw 20 tags | Manual review of 50 tickets found 56% had questionable tags. Trimmed taxonomy passes the noise floor |
 | Mini PC, not Hetzner VPS | Existing infrastructure, no cost. Hetzner on iteration backlog if uptime becomes an issue |
 
 ---
@@ -363,7 +362,7 @@ Production-grade evaluation harness with versioned ground truth, multi-level met
 
 Size: 500 tickets sampled from the filtered dataset.
 
-Sourcing: stratified random sample, 30 to 40 per tag where possible, accepting class imbalance for tail tags. Native labels are trimmed to the 13-tag taxonomy. A 30-ticket spot check on the trimmed labels validates the noise rate.
+Sourcing: stratified random sample, 30 to 40 per tag where possible, accepting class imbalance for tail tags. Native labels are trimmed to the 12-tag taxonomy. A 30-ticket spot check on the trimmed labels validates the noise rate.
 
 Versioning: ground truth stored as `evals/ground_truth/vN.jsonl`, each version immutable once tagged. Changes to taxonomy or labels create a new version. `CHANGELOG.md` records what changed and why.
 
@@ -479,7 +478,6 @@ floors:
     Product: 0.55
     Integration: 0.55
     Marketing: 0.50         # tail, wider tolerance
-    Sales: 0.50             # tail, wider tolerance
 ```
 
 Floors revised whenever ground truth version changes or whenever a new prompt version stabilises a higher baseline (ratchet upward, not downward).
@@ -561,7 +559,7 @@ Tasks:
   - Filter 2: queue in pure-IT set
   - Filter 3: drop support-agent reply patterns (LIKE 'Thank you for contacting us%' etc.)
   - Filter 4: dedup on (subject, body) hash
-  - Filter 5: trim tags to 13-tag taxonomy
+  - Filter 5: trim tags to 12-tag taxonomy
   - Filter 6: drop tickets with zero kept tags
   - Returns pandas dataframe with columns: id, subject, body, type, queue, priority, tags (list)
   - Caches locally to `data/cache/` to avoid re-downloading

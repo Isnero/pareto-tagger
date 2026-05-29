@@ -28,9 +28,9 @@ Seeking customer support and best practices for integrating a SaaS project manag
 
 **Current true_tags:** ['Product', 'Feature', 'Integration']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -48,9 +48,9 @@ Customer Support, I am writing to draw urgent attention to the necessity of impl
 
 **Current true_tags:** ['Security', 'Hardware', 'Software', 'Disruption']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -68,9 +68,9 @@ I require details about the system requirements for your project management soft
 
 **Current true_tags:** ['Software', 'Hardware', 'Documentation']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:** Would add product, but it wasn't on original tags
 
 ---
 
@@ -88,9 +88,9 @@ Inquiring about securing medical data using Docker Redis 6.2 systems. Looking fo
 
 **Current true_tags:** ['Security', 'Performance', 'Feature']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -108,9 +108,9 @@ Hello Customer Support, I am contacting you to report a medical data breach that
 
 **Current true_tags:** ['Security', 'Disruption']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -128,9 +128,9 @@ Please implement strengthened security protocols to safeguard medical data from 
 
 **Current true_tags:** ['Security', 'Performance']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Performance is bit too much here.
 
 ---
 
@@ -148,9 +148,9 @@ Customer Support, I am reaching out to request enhancements in data integration 
 
 **Current true_tags:** ['Feature', 'Performance', 'Documentation']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Not asking for documentation.
 
 ---
 
@@ -168,9 +168,9 @@ Dear Support Team, we are encountering occasional access problems with various s
 
 **Current true_tags:** ['Network', 'Security', 'Performance', 'Disruption']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Might add hardware, but was missing in original data.
 
 ---
 
@@ -188,9 +188,9 @@ Hello Customer Support, I hope this message finds you well. We are reaching out 
 
 **Current true_tags:** ['Documentation']
 
-**Verdict:** 
+**Verdict:** Disagree
 
-**Notes:** 
+**Notes:** Documentation is not correct, would add here Product, Disruption - wasn't there on original data
 
 ---
 
@@ -208,9 +208,9 @@ Our investment analysis tools are experiencing malfunctions, resulting in incorr
 
 **Current true_tags:** ['Performance', 'Documentation']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Documentation wrong
 
 ---
 
@@ -228,9 +228,9 @@ A system outage is impacting the security of medical data and hospital operation
 
 **Current true_tags:** ['Disruption', 'Security', 'Network', 'Performance']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -248,9 +248,9 @@ A user has reported intermittent project updates crashes that have been observed
 
 **Current true_tags:** ['Crash', 'Performance', 'Network']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -268,9 +268,9 @@ Seeking insights into digital strategies to enhance brand growth, specifically u
 
 **Current true_tags:** ['Product', 'Feature', 'Documentation', 'Marketing']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:** Was asking for case studies and insights.
 
 ---
 
@@ -288,9 +288,9 @@ The scalable SaaS project management system encounters frequent crashes under hi
 
 **Current true_tags:** ['Crash', 'Performance', 'Hardware', 'Network']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -308,9 +308,9 @@ I am contacting you to seek information on improving data analytics integration 
 
 **Current true_tags:** ['Product', 'Integration']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -328,9 +328,9 @@ Dear Customer Support, I am reaching out to report an unexpected data loss that 
 
 **Current true_tags:** ['Crash', 'Documentation']
 
-**Verdict:** 
+**Verdict:** Disagree
 
-**Notes:** 
+**Notes:** Might add Product which was missing in original, Documentation wrong
 
 ---
 
@@ -348,9 +348,9 @@ During peak hours, users frequently encounter timeout errors, likely due to serv
 
 **Current true_tags:** ['Performance', 'Disruption']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -368,9 +368,9 @@ During a recent video conference, I encountered difficulties with my StreamCam. 
 
 **Current true_tags:** ['Product', 'Performance', 'Hardware']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -388,9 +388,9 @@ Customer Support team, I am reaching out to inquire about best practices for int
 
 **Current true_tags:** ['Product', 'Feature', 'Performance']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:** Could add Integration too.
 
 ---
 
@@ -408,9 +408,9 @@ Hello Customer Support, I am contacting you to address an issue with my investme
 
 **Current true_tags:** ['Software', 'Hardware', 'Documentation', 'Performance']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Documentation wrong.
 
 ---
 
@@ -428,9 +428,9 @@ Upgrade security protocols on medical devices, network systems, and software to 
 
 **Current true_tags:** ['Security', 'Network', 'Hardware', 'Software']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -448,9 +448,9 @@ We are facing frequent crashes with Adobe Audition while editing audio files. Re
 
 **Current true_tags:** ['Crash', 'Performance']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -468,9 +468,9 @@ Customer Support,<br>We are notifying you that a healthcare provider has identif
 
 **Current true_tags:** ['Security', 'Network']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -488,9 +488,9 @@ Could you supply comprehensive documentation on how to integrate the SaaS projec
 
 **Current true_tags:** ['Documentation', 'Product', 'Feature']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -508,9 +508,9 @@ Could you provide detailed information on data analytics services for investment
 
 **Current true_tags:** ['Feature']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -528,9 +528,9 @@ Regular data synchronization failures happen across multiple devices, causing di
 
 **Current true_tags:** ['Performance', 'Disruption', 'Software', 'Hardware']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Hardware bit too much, wasn't workin on devices but wasn't hardware issue.
 
 ---
 
@@ -548,9 +548,9 @@ Seeking advice on implementing advanced data analytics tools to enhance investme
 
 **Current true_tags:** ['Feature', 'Performance']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -568,9 +568,9 @@ The website is crashing often after the Magento update because of incompatible p
 
 **Current true_tags:** ['Crash', 'Documentation']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Documentation wrong
 
 ---
 
@@ -588,9 +588,9 @@ Customer Support is writing to highlight a critical issue impacting a healthcare
 
 **Current true_tags:** ['Security', 'Disruption']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -608,8 +608,8 @@ Facing unsatisfactory results in digital campaigns due to algorithm changes and 
 
 **Current true_tags:** ['Performance', 'Documentation']
 
-**Verdict:** 
+**Verdict:** Disagree
 
-**Notes:** 
+**Notes:** Performance and Documentation wrong, would add Marketing here.
 
 ---
