@@ -1,6 +1,6 @@
 # Taxonomy
 
-12-tag closed taxonomy for multi-label classification. Tags below are the only valid prediction targets. Anything outside this list is a hallucination and should be retried.
+11-tag closed taxonomy for multi-label classification. Tags below are the only valid prediction targets. Anything outside this list is a hallucination and should be retried.
 
 For data noise stats and how this taxonomy was derived, see `docs/DATASET.md`. For the prediction prompt and Pydantic schema, see `docs/PROMPT_VERSIONING.md`.
 
@@ -13,7 +13,6 @@ For data noise stats and how this taxonomy was derived, see `docs/DATASET.md`. F
 | Disruption | A service is interrupted but not necessarily fully down. Includes outages, slowdowns severe enough to halt work, and partial unavailability |
 | Crash | A specific application or system stopped running, errored out, or became unresponsive |
 | Network | Connectivity issues, firewall problems, API rate limits, routing problems |
-| Documentation | The ticket explicitly asks for docs, guides, references, or how-to information. Not closing boilerplate |
 | Feature | The ticket requests new capability, enhancement of existing capability, or feature integration |
 | Hardware | Physical equipment is failing or needs attention. Servers, devices, peripherals, networking gear |
 | Software | A specific software product or version is causing the issue. Use when the body names software (SAP, Excel, JIRA, etc.) and ties the issue to that software |
@@ -155,45 +154,6 @@ Tags: Security, Network
 
 ---
 
-### Documentation
-
-Used for a request for a written document, reference, specification, or set of requirements. Explicitly exclude requests for advice, recommendations, or best practices, those are Feature or map to the underlying problem.
-
-**Example tickets:**
-
-> Subject: Support Request for Integrating DataRobot with SaaS Project Management Platform
-> Body: Could you provide detailed information on the integration process, including necessary documentation, APIs, and deployment steps?
-
-Tags: Documentation, Integration
-
-> Subject: System Requirements for Project Management SaaS
-> Body: I require details about the system requirements for your project management software... operating system compatibility, browser support, and any necessary hardware or software configurations?
-
-Tags: Software, Hardware, Documentation
-
-**Edge cases:**
-
-- "Where can I find the API docs": Documentation
-- "Your docs are wrong about X": Documentation (still about docs, even if it is a complaint)
-- "I read the docs and the system still does not work": probably not Documentation, focus on the actual problem
-
-**Negative clause:**
-> Documentation applies only when the customer asks for a written artifact: a guide, reference, API doc, tutorial, specification, or system requirements. It does NOT apply when the customer reports a malfunction and asks for help fixing it, even when they use phrases like "provide detailed steps," "guidance on how to fix," "a resolution," or "recommendations to resolve." A request to fix a broken thing is the underlying problem tag (Crash, Performance, Network, etc.), not Documentation. The test: would satisfying this ticket mean handing over a document, or doing technical work? If technical work, not Documentation.
-
-**Negative example tickets:**
-
-> Subject: Connection problems with QuickBooks Online
-> Body: ...After restarting the router and verifying the network settings, the issue still exists. We have gone through the API documentation.
-
-Tags: Network, Performance (NOT Documentation. "API documentation" here is a step already taken, not a request.)
-
-> Subject: Investment optimization output discrepancy
-> Body: ...Could you please provide a guide or solution to help us resolve this issue?
-
-Tags: Performance, Feature (NOT Documentation. "Guide or solution to resolve" is a fix request, not a document request.)
-
----
-
 ### Feature
 
 Use for requests for new capability, enhancement of existing capability, or feature additions.
@@ -209,11 +169,6 @@ Tags: Feature, Integration, Marketing
 > Body: Need to integrate tools such as Nuendo, Plex, and Google Cloud for improved efficiency.
 
 Tags: Feature, Integration
-
-**Distinction from Documentation:**
-
-- Documentation: "tell me how to use what exists"
-- Feature: "build me something new"
 
 ---
 
@@ -295,7 +250,7 @@ Use for connecting two systems, APIs, or platforms. Anything about plugging X in
 > Subject: Support Request: Guidance on Integrating Smart-Thermometer with Express.js 4.17
 > Body: I require help in integrating a Smart-Thermometer with Express.js 4.17. Could you recommend digital strategies to enhance this integration?
 
-Tags: Integration, Documentation
+Tags: Integration
 
 > Subject: Concerns with Software Integration Tools
 > Body: I am reporting an issue with the integration of software tools, including the Smart-Küchengeräte malware protection applications.
@@ -335,7 +290,7 @@ Tags: Marketing, Integration
 > Subject: Inquiry About Data Analytics Solutions for Investment Strategies Optimization
 > Body: Seeking information on data analytics solutions
 
-Tags: Marketing, Documentation
+Tags: Marketing
 
 **Note on "performing":**
 
@@ -365,7 +320,7 @@ Some judgment calls worth recording so future-me does not relitigate them.
 
 ## Versioning
 
-Current taxonomy version: v3 (12 tags).
+Current taxonomy version: v4 (11 tags).
 
 Taxonomy version tracks the ground truth version. They move together. A change to tag definitions, tag membership, or labeling rules bumps both, because the taxonomy is the contract the ground truth labels are scored against. They are not independent counters.
 
@@ -374,6 +329,7 @@ Taxonomy version tracks the ground truth version. They move together. A change t
 - v1: 13 tags, locked at project start. Sales and Marketing separate.
 - v2: Sales folded into Marketing. 12 tags. Reflected in evals/ground_truth/v2.jsonl. Reason: source labels did not separate the two consistently, the boundary was unlearnable. See CHANGELOG.
 - v3: Documentation definition tightened. Tag membership unchanged at 12. Excludes fix-requests and advice-requests that the v1 and v2 labels misfiled as Documentation. Ground truth regeneration pending (evals/ground_truth/v3.jsonl), requires a Documentation-strip rewrite rule in data/load_dataset.py. See CHANGELOG.
+- v4: Documentation dropped. 11 tags. The source applied Documentation to ~26% of tickets, but ~84% of those are not genuine documentation requests. The ~16% is lexically inseparable from fix-requests and advice-requests: all three use identical request phrasing (provide, supply, instructions, information, details, steps), so neither a keyword rule nor the source labels isolate the subset. Sampling both the kept and stripped partitions confirmed near coin-flip separation even on Request-type tickets. Dropped as not reliably learnable from intake text. See CHANGELOG and DATASET.md.
 
 ### Changing the taxonomy requires
 

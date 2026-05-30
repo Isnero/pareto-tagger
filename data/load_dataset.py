@@ -38,8 +38,7 @@ def _load_taxonomy() -> set[str]:
 VALID_TAGS = _load_taxonomy()
 
 
-# Tag rewrites: map source-dataset tags to canonical taxonomy tags
-# before the trim step drops everything else.
+# Tag rewrites: map source-dataset tags to canonical taxonomy tags before the trim step drops everything else.
 # Each rewrite is documented in docs/DATASET.md with rationale.
 TAG_REWRITES = {
     "Firewall": "Network",
@@ -86,7 +85,11 @@ def load() -> pd.DataFrame:
     df = df[df["queue"].isin(ALLOWED_QUEUES)]
     logger.info("After queue filter: %d", len(df))
 
-    # Filter 3: Drop contamination, fill NaN bodies with empty string for the filter
+    # Filter 3: Drop null-body rows
+    df = df[df["body"].notna()].copy()
+    logger.info("After null body filter: %d ", len(df))
+
+    # Filter 4: Drop contamination, fill NaN bodies with empty string for the filter
     mask = df["body"].fillna("").str.startswith(CONTAMINATION_PREFIXES)
     removed = df[mask][["ticket_id", "subject", "body"]]
     removed.to_json(
@@ -98,7 +101,7 @@ def load() -> pd.DataFrame:
     df = df[~mask]
     logger.info("After contamination filter: %d (removed %d)", len(df), len(removed))
 
-    # Filter 4: Deduplicate on (subject, body) hash
+    # Filter 5: Deduplicate on (subject, body) hash
     df["content_hash"] = df.apply(
         lambda row: hashlib.md5(
             json.dumps([row["subject"], row["body"]], ensure_ascii=False).encode()
@@ -119,7 +122,7 @@ def load() -> pd.DataFrame:
 
     df = df.drop(columns=TAG_COLUMNS).merge(tags_per_ticket, on="ticket_id")
 
-    # FIlter 5a: rewrite source tags to canonical taxonomy tags
+    # Filter 6a: rewrite source tags to canonical taxonomy tags
     df["tags_before"] = df["tags"]
     df["tags"] = df["tags"].apply(apply_tag_rewrites)
     df["rewritten"] = df["tags_before"] != df["tags"]
@@ -127,14 +130,15 @@ def load() -> pd.DataFrame:
         "After tag rewrites: %d tickets actually changed", int(df["rewritten"].sum())
     )
 
-    # Filter 5b: trim to 13 tag taxonomy
+    # Filter 6b: trim to 11 tag taxonomy
     df["tags"] = df["tags"].apply(
         lambda tags: [tag for tag in tags if tag in VALID_TAGS]
     )
+    logger.info("After taxonomy trim: %d", len(df))
 
-    # Filter 6: drop zero tag tickets
+    # Filter 7: drop zero tag tickets
     df = df[df["tags"].apply(len) > 0]
-    logger.info("After taxonomy trim and zero tag drop: %d", len(df))
+    logger.info("After zero tag drop: %d", len(df))
 
     # Write rewrites trace for spot-check targeting and verification
     df[df["rewritten"]][["ticket_id", "tags_before", "tags"]].to_json(

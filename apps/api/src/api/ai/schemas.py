@@ -8,7 +8,6 @@ class Tag(str, Enum):
     DISRUPTION = "Disruption"
     CRASH = "Crash"
     NETWORK = "Network"
-    DOCUMENTATION = "Documentation"
     FEATURE = "Feature"
     HARDWARE = "Hardware"
     SOFTWARE = "Software"
