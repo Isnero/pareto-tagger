@@ -40,27 +40,21 @@ Counts from the current pipeline run. Each row follows from the one above it.
 | After deduplication | 15047 |
 | After zero-tag drop | 14395 |
 
-The tag rewrite and trim steps are not in this table because they do not change
-the row count. The rewrite step changed the tag set on 3604 tickets. The trim
-step leaves the row count unchanged; its effect appears only when a trimmed
-ticket reaches zero tags and is dropped at the final step.
+The tag rewrite and trim steps are not in this table because they do not change the row count. The rewrite step changed the tag set on 3604 tickets. The trim step leaves the row count unchanged; its effect appears only when a trimmed ticket reaches zero tags and is dropped at the final step.
 
 Final corpus: **14395 tickets**.
 
 ### Filter 4: support-agent reply contamination
 
-Some tickets are not customer messages but support agent replies asking for
-clarification. Examples found in the original sample review:
+Some tickets are not customer messages but support agent replies asking for clarification. Examples found in the original sample review:
 
 - "Thank you for contacting us. To better understand your request, could you please provide details on..."
 - "Would you like assistance with digital strategies? I can provide detailed information..."
 - "Customer support has documented system interruptions impacting..."
 
-These contaminate both training and evaluation. The model would learn to predict
-tags for messages that have nothing to do with the actual ticket content.
+These contaminate both training and evaluation. The model would learn to predict tags for messages that have nothing to do with the actual ticket content.
 
-Filter pattern (pandas `str.startswith` on a tuple of prefixes in
-`load_dataset.py`):
+Filter pattern (pandas `str.startswith` on a tuple of prefixes in `load_dataset.py`):
 
 ```sql
 NOT (
@@ -71,50 +65,31 @@ NOT (
 )
 ```
 
-The current prefix set removes 14 tickets. An earlier wider-pattern estimate put
-this nearer 100; the current rules are narrower and only match the confirmed
-agent-reply openers. Tickets that slip past these prefixes are logged as
-iteration backlog. Removed tickets are written to
-`contamination_removed.jsonl` for audit.
+The current prefix set removes 14 tickets. An earlier wider-pattern estimate put this nearer 100; the current rules are narrower and only match the confirmed agent-reply openers. Tickets that slip past these prefixes are logged as iteration backlog. Removed tickets are written to `contamination_removed.jsonl` for audit.
 
 ### Filter 5: deduplication
 
-The dataset contains exact duplicate tickets. The original zero-tag investigation
-found pairs of identical entries (lead generation tracking, data analytics
-solutions). Either the synthetic generator emitted duplicates or the dataset
-preparation has a bug. Dedup uses an MD5 hash of `(subject, body)`.
+The dataset contains exact duplicate tickets. The original zero-tag investigation found pairs of identical entries (lead generation tracking, data analytics solutions). Either the synthetic generator emitted duplicates or the dataset preparation has a bug. Dedup uses an MD5 hash of `(subject, body)`.
 
 ### Filter 6: zero-tag drop
 
-After the taxonomy trim, tickets with no remaining valid tag are dropped. With
-the 11-tag taxonomy this removes 652 tickets, **4.3% of the post-dedup corpus**
-(652 of 15047). They split into two groups:
+After the taxonomy trim, tickets with no remaining valid tag are dropped. With the 11-tag taxonomy this removes 652 tickets, **4.3% of the post-dedup corpus** (652 of 15047). They split into two groups:
 
 - Tickets whose original labels were entirely workflow tags, the redundant trio (IT, Tech Support, Technical), or Feedback. Mostly off-topic content like investment advice questions or pure marketing strategy chatter.
 - Tickets whose only valid tag was Documentation, now dropped (see Documentation removal below).
 - Legitimate IT tickets where the labeller used very specific tail tags (Elasticsearch, RAID-Controller, Dashboard) and skipped the general categories. Real losses, but the alternative is expanding the taxonomy with rare tags that cannot be reliably learned at this volume.
 
-The loss rose from 2.48% (in the earlier 13-tag taxonomy) to 4.3% specifically
-because Documentation-only tickets now fall out. That is expected: those tickets
-were carried solely by a tag shown to be unlearnable from intake text.
+The loss rose from 2.48% (in the earlier 13-tag taxonomy) to 4.3% specifically because Documentation-only tickets now fall out. That is expected: those tickets were carried solely by a tag shown to be unlearnable from intake text.
 
 ## Documentation removal (v4)
 
-Documentation was in the taxonomy through v3 and was removed in v4 after a
-corpus-wide analysis showed it could not be cleanly separated from other intents.
+Documentation was in the taxonomy through v3 and was removed in v4 after a corpus-wide analysis showed it could not be cleanly separated from other intents.
 
 ### The investigation
 
-The source labels apply Documentation to roughly 26% of all tickets (3810 of the
-post-trim corpus). A v2 spot check first flagged it as the dominant noise source:
-Documentation was repeatedly attached to Incident and Problem tickets that report
-a malfunction and ask for a fix, not for a document.
+The source labels apply Documentation to roughly 26% of all tickets (3810 of the post-trim corpus). A v2 spot check first flagged it as the dominant noise source. Documentation was repeatedly attached to Incident and Problem tickets that report a malfunction and ask for a fix, not for a document.
 
-To test whether a clean subset could be salvaged, an allowlist-gated rule was
-built: keep Documentation only when the body contains an explicit written-artifact
-request (documentation, specification, system requirements, API docs, guide,
-manual) paired with request framing. The rule stripped Documentation from 84% of
-its rows. The per-type breakdown:
+To test whether a clean subset could be salvaged, an allowlist-gated rule was built: keep Documentation only when the body contains an explicit written-artifact request (documentation, specification, system requirements, API docs, guide, manual) paired with request framing. The rule stripped Documentation from 84% of its rows. The per-type breakdown:
 
 | Ticket type | Documentation labels | Stripped | Strip rate |
 | --- | --- | --- | --- |
@@ -125,36 +100,19 @@ its rows. The per-type breakdown:
 
 ### The finding
 
-Both partitions were sampled and read. The genuine ~16% kept by the rule was not
-clean, and the 84% stripped was not uniformly wrong. The reason is lexical: in
-this corpus, genuine documentation requests and fix-requests and advice-requests
-all use identical phrasing. "Could you supply comprehensive instructions for
-integrating with MongoDB" (a real doc request) and "offer a remedy or steps to
-restore the missing data" (a crash report) share the same request-for-procedure
-shape and the same verbs (provide, supply, instructions, information, details,
-steps). No keyword rule separates them.
+Both partitions were sampled and read. The genuine ~16% kept by the rule was not clean, and the 84% stripped was not uniformly wrong. The reason is lexical: in this corpus, genuine documentation requests and fix-requests and advice-requests all use identical phrasing. "Could you supply comprehensive instructions for integrating with MongoDB" (a real doc request) and "offer a remedy or steps to restore the missing data" (a crash report) share the same request-for-procedure shape and the same verbs (provide, supply, instructions, information, details, steps). No keyword rule separates them.
 
-The separation failed even on Request-type tickets, where documentation requests
-should concentrate. Sampling the stripped Request rows showed roughly a coin flip
-between genuine doc asks and advice or pre-sales inquiries using the same words.
+The separation failed even on Request-type tickets, where documentation requests should concentrate. Sampling the stripped Request rows showed roughly a coin flip between genuine doc asks and advice or pre-sales inquiries using the same words.
 
 ### The decision
 
-Documentation dropped. A tag whose genuine instances are lexically inseparable
-from noise cannot produce reliable ground truth, and a per-tag F1 computed against
-coin-flip labels is meaningless and would drag the macro average. The class adds
-no discriminating signal beyond the substantive tags (Security, Crash,
-Performance, Integration) it co-occurs with in nearly every case.
+Documentation dropped. A tag whose genuine instances are lexically inseparable from noise cannot produce reliable ground truth, and a per-tag F1 computed against coin-flip labels is meaningless and would drag the macro average. The class adds no discriminating signal beyond the substantive tags (Security, Crash, Performance, Integration) it co-occurs with in nearly every case.
 
-This is a label-quality limit of the synthetic data, not a modelling choice. On
-real intake data where customers more clearly distinguish "send me the docs" from
-"fix my problem," a documentation-request class may be recoverable.
+This is a label-quality limit of the synthetic data, not a modelling choice. On real intake data where customers more clearly distinguish "send me the docs" from "fix my problem," a documentation-request class may be recoverable.
 
 ## Tag distribution
 
-> TODO: regenerate against the v4 (11-tag) corpus of 14395 tickets. The tables
-> below are from the earlier 13-tag corpus and are stale. Do not cite until
-> recomputed.
+> TODO: regenerate against the v4 (11-tag) corpus of 14395 tickets. The tables below are from the earlier 13-tag corpus and are stale. Do not cite until recomputed.
 
 <!-- STALE, regenerate:
 Raw-data top-tag frequency table, tags-per-ticket distribution, and average
@@ -166,9 +124,7 @@ a zero-tag rate of 2.48% against the 13-tag taxonomy. Both change under v4.
 
 ### Methodology
 
-50 tickets sampled at random from the filtered dataset. Each tag on each ticket
-reviewed manually against subject and body. Verdict per ticket recorded as agree,
-partial, or disagree.
+50 tickets sampled at random from the filtered dataset. Each tag on each ticket reviewed manually against subject and body. Verdict per ticket recorded as agree, partial, or disagree.
 
 ### Results
 
@@ -179,15 +135,9 @@ partial, or disagree.
 Per-ticket issue rate: 56% (28/50 tickets had at least one questionable tag).
 Per-tag noise estimate: roughly 15 to 20% (rough, not measured tag-by-tag).
 
-The two numbers measure different things. Per-ticket counts any ticket with one
-bad tag as noisy. Per-tag counts individual mismatches against total tag
-assignments. The per-tag number is what affects model training directly. The
-per-ticket number is the more conservative talking point.
+The two numbers measure different things. Per-ticket counts any ticket with one bad tag as noisy. Per-tag counts individual mismatches against total tag assignments. The per-tag number is what affects model training directly. The per-ticket number is the more conservative talking point.
 
-Note: this 50-ticket baseline predates the Documentation removal. The single
-largest driver of per-ticket noise was Documentation, so the post-v4 per-ticket
-rate is expected to be lower. Regenerate the spot-check noise estimate against
-the v4 corpus before citing a current figure.
+Note: this 50-ticket baseline predates the Documentation removal. The single largest driver of per-ticket noise was Documentation, so the post-v4 per-ticket rate is expected to be lower. Regenerate the spot-check noise estimate against the v4 corpus before citing a current figure.
 
 ### Tags removed from taxonomy and why
 
@@ -206,65 +156,40 @@ the v4 corpus before citing a current figure.
 
 ### Tags retained
 
-11 tags: Security, Performance, Disruption, Crash, Network, Feature, Hardware,
-Software, Product, Integration, Marketing.
+11 tags: Security, Performance, Disruption, Crash, Network, Feature, Hardware, Software, Product, Integration, Marketing.
 
 Full per-tag definitions and worked examples in `docs/TAXONOMY.md`.
 
 ## Why the answer field is not used
 
-The dataset includes an `answer` column considered for expanding the taxonomy
-back. Hypothesis: tags like Bug, Recovery, Maintenance might be predictable from
-resolution text even if absent from the customer-facing subject and body.
+The dataset includes an `answer` column considered for expanding the taxonomy back. Hypothesis: tags like Bug, Recovery, Maintenance might be predictable from resolution text even if absent from the customer-facing subject and body.
 
-Sample inspection of 50 random tickets showed the `answer` column is inconsistent.
-Some entries contain resolution text. Others contain clarifying questions back to
-the customer ("Could you provide more details on..."). Others contain call-back
-offers ("We can take this on the call to answer your questions"). Not a reliable
-signal source.
+Sample inspection of 50 random tickets showed the `answer` column is inconsistent. Some entries contain resolution text. Others contain clarifying questions back to the customer ("Could you provide more details on..."). Others contain call-back offers ("We can take this on the call to answer your questions"). Not a reliable signal source.
 
-Decision: subject and body only. The model predicts what the customer reported,
-not what was found during investigation. This matches the intake-triage use case
-and keeps the input length predictable.
+Decision: subject and body only. The model predicts what the customer reported, not what was found during investigation. This matches the intake-triage use case and keeps the input length predictable.
 
-If real ServiceNow data ever becomes available, work_notes and resolution_notes
-are richer signals than this synthetic answer field.
+If real ServiceNow data ever becomes available, work_notes and resolution_notes are richer signals than this synthetic answer field.
 
 ## Priority distribution
 
-In the filtered corpus: roughly 49% high, 38% medium, 13% low. The skew is a
-synthetic-data artifact. Because high covers about half the data, it is not a
-meaningful slice cut. Eval slicing uses low (13%) instead.
+In the filtered corpus: roughly 49% high, 38% medium, 13% low. The skew is a synthetic-data artifact. Because high covers about half the data, it is not a meaningful slice cut. Eval slicing uses low (13%) instead.
 
-> TODO: confirm these percentages against the v4 corpus. They were measured on an
-> earlier corpus and the row count has changed.
+> TODO: confirm these percentages against the v4 corpus. They were measured on an earlier corpus and the row count has changed.
 
 ## Ground truth labeling workflow
 
-Ground truth uses inherited labels from the source dataset, trimmed to the
-taxonomy by `data/load_dataset.py`. No manual re-labeling at the row level.
-Quality is validated by spot checks (see `evals/ground_truth/`). The per-ticket
-issue rate from the spot check is the headline noise measurement.
+Ground truth uses inherited labels from the source dataset, trimmed to the taxonomy by `data/load_dataset.py`. No manual re-labeling at the row level. Quality is validated by spot checks (see `evals/ground_truth/`). The per-ticket issue rate from the spot check is the headline noise measurement.
 
-Per-row labeling fields (`labelled_by`, `labelled_at`, `review_notes`) are present
-in the schema but unpopulated. They are reserved for a future version if a full
-manual labeling pass is done.
+Per-row labeling fields (`labelled_by`, `labelled_at`, `review_notes`) are present in the schema but unpopulated. They are reserved for a future version if a full manual labeling pass is done.
 
 ## Synthetic data caveat
 
-Tickets are LLM-generated. Real production tickets contain noise this dataset does
-not have:
+Tickets are LLM-generated and mostly clean, but not uniformly. Some bodies contain truncated or half-finished sentences, an artifact of the generator. Defects this dataset largely lacks, and that real production tickets carry heavily:
 
 - Typos and grammatical errors
 - Mixed languages within one body
 - Log paste-ins
-- Half-finished sentences
 - Urgency words ("URGENT", "ASAP", "P1") without justification
-- Customer-system-name inconsistency (one ticket calls it "the prod DB", the next "primary database")
+- Customer-system-name inconsistency
 
-The classification pipeline is designed to be data-source-agnostic. When real data
-is available, the same pipeline runs against it through configuration only.
-
-The honest read: this dataset proves the pipeline works on clean inputs. Whether
-the same prompts and taxonomy hold up on noisy production data is not answered
-here.
+The honest read: this dataset is cleaner than production but not pristine. It shows the pipeline works on near-clean inputs. Whether the same prompts and taxonomy hold on heavily noisy production data is not answered here.

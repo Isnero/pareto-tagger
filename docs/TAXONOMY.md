@@ -322,14 +322,14 @@ Some judgment calls worth recording so future-me does not relitigate them.
 
 Current taxonomy version: v4 (11 tags).
 
-Taxonomy version tracks the ground truth version. They move together. A change to tag definitions, tag membership, or labeling rules bumps both, because the taxonomy is the contract the ground truth labels are scored against. They are not independent counters.
+Taxonomy version tracks definition changes, ground truth version tracks data regenerations, they are related but a definition-only change can bump taxonomy without producing a new ground truth file.
 
 ### Version history
 
 - v1: 13 tags, locked at project start. Sales and Marketing separate.
 - v2: Sales folded into Marketing. 12 tags. Reflected in evals/ground_truth/v2.jsonl. Reason: source labels did not separate the two consistently, the boundary was unlearnable. See CHANGELOG.
-- v3: Documentation definition tightened. Tag membership unchanged at 12. Excludes fix-requests and advice-requests that the v1 and v2 labels misfiled as Documentation. Ground truth regeneration pending (evals/ground_truth/v3.jsonl), requires a Documentation-strip rewrite rule in data/load_dataset.py. See CHANGELOG.
-- v4: Documentation dropped. 11 tags. The source applied Documentation to ~26% of tickets, but ~84% of those are not genuine documentation requests. The ~16% is lexically inseparable from fix-requests and advice-requests: all three use identical request phrasing (provide, supply, instructions, information, details, steps), so neither a keyword rule nor the source labels isolate the subset. Sampling both the kept and stripped partitions confirmed near coin-flip separation even on Request-type tickets. Dropped as not reliably learnable from intake text. See CHANGELOG and DATASET.md.
+- v3: Documentation definition tightening. Planned, never shipped. The goal was to exclude fix-requests and advice-requests that v1 and v2 misfiled as Documentation, via a strip rule in data/load_dataset.py gated on a genuine-doc-request allowlist. Building that rule was the investigation that killed the tag: it stripped 84% of Documentation labels, and sampling both partitions showed the surviving ~16% was lexically inseparable from the fix-requests it was meant to keep out. No v3.jsonl was generated. The tightening path was superseded by v4 (full drop). See CHANGELOG.
+- v4: Documentation dropped. 11 tags. Outcome of the v3 investigation above: the tag is not reliably learnable from intake text. Corpus drops Documentation-only tickets, raising zero-tag loss to 4.3% (from 2.48%). See CHANGELOG and DATASET.md.
 
 ### Changing the taxonomy requires
 
