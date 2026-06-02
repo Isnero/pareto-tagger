@@ -6,8 +6,8 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 
-GROUND_PATH = Path(__file__).parent / "ground_truth" / "v2.jsonl"
-OUTPUT_PATH = Path(__file__).parent / "ground_truth" / "spot_check_v2.md"
+GROUND_PATH = Path(__file__).parent / "ground_truth" / "v4.jsonl"
+OUTPUT_PATH = Path(__file__).parent / "ground_truth" / "spot_check_v4.md"
 REPO_ROOT = Path(__file__).parent.parent
 SEED = 67
 SAMPLE_SIZE = 30
@@ -21,7 +21,7 @@ def main() -> None:
     spot_check = random.sample(rows, SAMPLE_SIZE)
 
     lines = [
-        "# Spot check, v2 ground truth",
+        "# Spot check, v4 ground truth",
         "",
         f"Random seed: {SEED}",
         f"Sample size: {SAMPLE_SIZE}",

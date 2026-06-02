@@ -8,7 +8,7 @@ from data.load_dataset import load, VALID_TAGS
 logger = logging.getLogger(__name__)
 
 
-JSONL_PATH = Path(__file__).parent.parent / "evals" / "ground_truth" / "v2.jsonl"
+JSONL_PATH = Path(__file__).parent.parent / "evals" / "ground_truth" / "v4.jsonl"
 
 
 def generate_ground_truth() -> pd.DataFrame:
@@ -41,6 +41,11 @@ def generate_ground_truth() -> pd.DataFrame:
 
 
 def save_to_jsonl(df: pd.DataFrame) -> None:
+    if JSONL_PATH.exists():
+        raise FileExistsError(
+            f"{JSONL_PATH} exists. Ground truth is immutable, bump the version."
+        )
+
     df = df.copy()
     df = df.rename(columns={"tags": "true_tags"})
     df["sampled_at"] = pd.Timestamp.now().strftime("%Y-%m-%d")
