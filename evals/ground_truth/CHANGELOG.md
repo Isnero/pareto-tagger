@@ -24,9 +24,10 @@ Taxonomy and filter changes are recorded here. A change may bump the taxonomy ve
 
 ### Ground truth
 
-- No new ground truth file in this commit. v2.jsonl predates the Documentation drop and still carries Documentation labels, so it is stale against the v4 taxonomy. A v4.jsonl regeneration against the 14395 corpus is the next milestone and must land before any eval run.
-
-- Per-tag floors do not carry forward from v2. The tag set changed (11 tags, Documentation removed), so floors recalibrate against the first measured LLM baseline at week 5.
+- v4.jsonl generated. 500 stratified records sampled 2026-06-02 from the 14395-row v4 corpus. Per-tag draw of up to 40 tickets across the 11 tags, filler topped up to 500 (the 11-tag draw alone falls short of 500, the filler covers it). Stratified sample seed 67. v2.jsonl is now superseded for scoring but retained immutable for historical comparison.
+- spot_check_v4.md generated, 30 tickets, seed 67, awaiting manual review. The per-ticket issue rate from that review is the v4 headline noise figure and is still pending. DATASET.md carries a placeholder until the review lands.
+- An immutability guard was added to save_to_jsonl in sample_ground_truth.py. It raises if the target vN.jsonl already exists, enforcing the "immutable once tagged" rule in code rather than by convention.
+- Per-tag floors do not carry forward from v2. The tag set changed (11 tags), so floors recalibrate against the first measured LLM baseline at week 5.
 
 ### Open flags (backlog, not blocking v4)
 
