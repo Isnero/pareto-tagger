@@ -112,13 +112,37 @@ This is a label-quality limit of the synthetic data, not a modelling choice. On 
 
 ## Tag distribution
 
-> TODO: regenerate against the v4 (11-tag) corpus of 14395 tickets. The tables below are from the earlier 13-tag corpus and are stale. Do not cite until recomputed.
+Computed against the v4 corpus of 14395 tickets. 25500 total tag instances.
 
-<!-- STALE, regenerate:
-Raw-data top-tag frequency table, tags-per-ticket distribution, and average
-tags per ticket. The previous version reported average 1.89 tags per ticket and
-a zero-tag rate of 2.48% against the 13-tag taxonomy. Both change under v4.
--->
+| Tag | Frequency | % of all tag instances |
+| --- | --- | --- |
+| Performance | 6810 | 26.71% |
+| Disruption | 3862 | 15.15% |
+| Security | 3618 | 14.19% |
+| Feature | 2512 | 9.85% |
+| Network | 2247 | 8.81% |
+| Crash | 1363 | 5.35% |
+| Marketing | 1217 | 4.77% |
+| Product | 1195 | 4.69% |
+| Hardware | 1050 | 4.12% |
+| Integration | 838 | 3.29% |
+| Software | 788 | 3.09% |
+
+Performance dominates at 26.71%, more than double the next tag. The set is heavily skewed toward a few high-frequency classes. Eval calibration should weight macro and per-tag F1 over micro, since a classifier can score well on micro by handling Performance alone.
+
+### Tags per ticket
+
+| Tags per ticket | Tickets | % |
+| --- | --- | --- |
+| 1 | 6304 | 43.79% |
+| 2 | 5534 | 38.44% |
+| 3 | 2134 | 14.82% |
+| 4 | 389 | 2.70% |
+| 5 | 34 | 0.24% |
+
+Average 1.77 tags per ticket, down from 1.89 under the 13-tag taxonomy. The drop follows from folding Outage into Disruption and Sales into Marketing (two tags collapse to one on co-tagged tickets) and from removing Documentation. 99.8% of tickets carry 1 to 4 tags. The classifier prompt asks for 1 to 4 with a hard cap of 5, which fits.
+
+There is no zero-tag row: zero-tag tickets are dropped at Filter 6 before the corpus is written. The 4.3% zero-tag loss is documented in the Filter 6 section.
 
 ## Label noise estimate
 
@@ -172,9 +196,7 @@ If real ServiceNow data ever becomes available, work_notes and resolution_notes 
 
 ## Priority distribution
 
-In the filtered corpus: roughly 49% high, 38% medium, 13% low. The skew is a synthetic-data artifact. Because high covers about half the data, it is not a meaningful slice cut. Eval slicing uses low (13%) instead.
-
-> TODO: confirm these percentages against the v4 corpus. They were measured on an earlier corpus and the row count has changed.
+In the filtered corpus: 48.7% high, 37.9% medium, 13.4% low. The skew is a synthetic-data artifact. Because high covers about half the data, it is not a meaningful slice cut. Eval slicing uses low (13%) instead.
 
 ## Ground truth labeling workflow
 
