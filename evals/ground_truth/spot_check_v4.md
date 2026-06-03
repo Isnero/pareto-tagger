@@ -28,9 +28,9 @@ Customer support has reported that multiple marketing tools used for report writ
 
 **Current true_tags:** ['Disruption', 'Performance']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:** Product could be added, but not explicitly saying that these tools are self-developed and/or self-maintained.
 
 ---
 
@@ -48,9 +48,9 @@ Expressing disappointment regarding the digital strategies executed by the marke
 
 **Current true_tags:** ['Performance', 'Disruption', 'Marketing']
 
-**Verdict:** 
+**Verdict:** Disagree
 
-**Notes:** 
+**Notes:** 'Performance', 'Disruption' wrong - that was already documented in the taxonomy, but original data carries misapplications of this tag.
 
 ---
 
@@ -68,9 +68,9 @@ Dear Customer Support Team, <br><br>I am reaching out to seek help with updating
 
 **Current true_tags:** ['Product', 'Integration']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -88,9 +88,9 @@ The financial firm is experiencing sluggish performance with its data analytics 
 
 **Current true_tags:** ['Performance', 'Network']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -108,9 +108,9 @@ Hello Customer Support, I am contacting you to report a medical data breach that
 
 **Current true_tags:** ['Security', 'Disruption']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -128,9 +128,9 @@ Our marketing agency has encountered disruptions during the implementation of ou
 
 **Current true_tags:** ['Disruption', 'Network', 'Performance']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -148,9 +148,9 @@ Looking for details on digital strategies to promote the Smart-Roboter-Rasenmäh
 
 **Current true_tags:** ['Product', 'Feature', 'Marketing']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -168,9 +168,9 @@ Customer support, we require an urgent update to improve the performance scalabi
 
 **Current true_tags:** ['Performance', 'Product']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Could add Hardware as laptop was mentioned as scope of issue.
 
 ---
 
@@ -188,9 +188,9 @@ The digital campaigns have not been successful, and the metrics being displayed 
 
 **Current true_tags:** ['Integration']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Could include SOftware or Product but not enough information which
 
 ---
 
@@ -208,9 +208,9 @@ I am encountering unanticipated crashes with Adobe Audition and Skype following 
 
 **Current true_tags:** ['Crash', 'Performance', 'Disruption']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -228,9 +228,9 @@ Inquiring about customer support to get an update on marketing strategies to ord
 
 **Current true_tags:** ['Product', 'Feature', 'Marketing']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -248,9 +248,9 @@ Dear Customer Support, I am currently preparing a report on the incident with th
 
 **Current true_tags:** ['Performance', 'Hardware']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -268,9 +268,9 @@ Our investment analysis tools are experiencing malfunctions, resulting in incorr
 
 **Current true_tags:** ['Performance']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Product should be added, not saying which tools but that's impression they are self developed tools
 
 ---
 
@@ -288,9 +288,9 @@ A financial company's customer support team is facing data integration errors th
 
 **Current true_tags:** ['Disruption']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Integration should be added as mentioning it clearly
 
 ---
 
@@ -308,9 +308,9 @@ I am contacting you to seek information on improving data analytics integration 
 
 **Current true_tags:** ['Product', 'Integration']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -328,9 +328,9 @@ I am reaching out to seek guidance on the best practices for securing medical da
 
 **Current true_tags:** ['Security']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -348,9 +348,9 @@ The financial institution faced delays in processing data, which affected invest
 
 **Current true_tags:** ['Performance', 'Disruption', 'Software']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -368,9 +368,9 @@ We have encountered a data breach involving medical records due to unauthorized 
 
 **Current true_tags:** ['Security']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -388,9 +388,9 @@ The digital marketing efforts by the agency to boost product brand growth have f
 
 **Current true_tags:** ['Performance', 'Marketing']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Performance is reserved to system-related issues not Marketing - already noted on taxonomy.
 
 ---
 
@@ -408,9 +408,9 @@ Facing problems with the dashboard not syncing data correctly. This might have h
 
 **Current true_tags:** ['Performance']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Might argue if Disruption is not better here.
 
 ---
 
@@ -428,9 +428,9 @@ Dear Customer Support, I am writing to draw attention to a critical issue faced 
 
 **Current true_tags:** ['Performance', 'Disruption']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -448,9 +448,9 @@ The project management SaaS encountered sporadic outages impacting various featu
 
 **Current true_tags:** ['Disruption', 'Performance']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -468,9 +468,9 @@ Customer Support, I am reaching out regarding an issue with our company's digita
 
 **Current true_tags:** ['Hardware', 'Performance', 'Disruption']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Software missing, stated along hardware.
 
 ---
 
@@ -488,9 +488,9 @@ Faced issues, attempted to restart the system
 
 **Current true_tags:** ['Performance', 'Disruption']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -508,9 +508,9 @@ Customer Support, I am reaching out to request enhancements in data integration 
 
 **Current true_tags:** ['Feature', 'Performance']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -528,9 +528,9 @@ Upgrade security protocols on medical devices, network systems, and software to 
 
 **Current true_tags:** ['Security', 'Network', 'Hardware', 'Software']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -548,9 +548,9 @@ The healthcare provider encountered difficulties accessing data. Potential reaso
 
 **Current true_tags:** ['Security', 'Disruption']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -568,9 +568,9 @@ I am facing issues with the data analytics tool as it unexpectedly crashes. Ther
 
 **Current true_tags:** ['Crash', 'Integration']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -588,9 +588,9 @@ A recent security intrusion has compromised medical records and disrupted hospit
 
 **Current true_tags:** ['Security', 'Disruption', 'Hardware']
 
-**Verdict:** 
+**Verdict:** Agree
 
-**Notes:** 
+**Notes:**
 
 ---
 
@@ -608,8 +608,8 @@ The healthcare system encountered a data breach impacting medical records due to
 
 **Current true_tags:** ['Security']
 
-**Verdict:** 
+**Verdict:** Partial
 
-**Notes:** 
+**Notes:** Network missing tag.
 
 ---
