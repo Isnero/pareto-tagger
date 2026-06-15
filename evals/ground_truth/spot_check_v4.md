@@ -7,10 +7,10 @@ Reviewer: ks
 
 ## Results
 
-- Agree: 
-- Partial: 
-- Disagree: 
-- Per-ticket issue rate: 
+- Agree: 19
+- Partial: 7
+- Disagree: 2
+- Per-ticket issue rate: 9/30 = 30%
 
 ## Per-ticket notes
 
@@ -168,9 +168,9 @@ Customer support, we require an urgent update to improve the performance scalabi
 
 **Current true_tags:** ['Performance', 'Product']
 
-**Verdict:** Partial
+**Verdict:** Agree
 
-**Notes:** Could add Hardware as laptop was mentioned as scope of issue.
+**Notes:**
 
 ---
 
@@ -408,9 +408,9 @@ Facing problems with the dashboard not syncing data correctly. This might have h
 
 **Current true_tags:** ['Performance']
 
-**Verdict:** Partial
+**Verdict:** Disagree
 
-**Notes:** Might argue if Disruption is not better here.
+**Notes:** Should be Integration and Disruption, possibly Software.
 
 ---
 
@@ -448,9 +448,9 @@ The project management SaaS encountered sporadic outages impacting various featu
 
 **Current true_tags:** ['Disruption', 'Performance']
 
-**Verdict:** Agree
+**Verdict:** Partial
 
-**Notes:**
+**Notes:** Performance not so visible here.
 
 ---
 
@@ -590,7 +590,7 @@ A recent security intrusion has compromised medical records and disrupted hospit
 
 **Verdict:** Agree
 
-**Notes:**
+**Notes:**1
 
 ---
 
