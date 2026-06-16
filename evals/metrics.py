@@ -49,3 +49,65 @@ def _prf(tp, fp, fn):
         (2 * precision * recall / (precision + recall)) if (precision + recall) else 0.0
     )
     return precision, recall, f1
+
+
+def compute_metrics(y_true, y_pred, tags, macro_over_supprt_only=False):
+    """Multi-label metrics. Returns a dict with macro_f1 first.
+    y_true, y_pred: equal-length lists of tag-name lists, aligned by ticket.
+    tags: the taxonomy, an ordered list of valid tag names.
+    macro_over_support_only: if True, macro averages only over tags with support > 0 in y_true.
+    Use on slices or small samples where some tags are absent, so an absent tag does not drag macro to 0.
+    Default False averages over all tags, correct for the full eval set where every tag appears.
+    """
+
+    if len(y_true) != len(y_pred):
+        raise ValueError(f"Length mismatch: {len(y_true)} true vs {len(y_pred)} pred")
+    if not y_true:
+        raise ValueError("Empty input")
+
+    counts = _counts(y_true, y_pred, tags)
+
+    per_tag = {}
+    for t in tags:
+        p, r, f = _prf(counts[t]["tp"], counts[t]["fp"], counts[t]["fn"])
+        per_tag[t] = {
+            "precision": round(p, 4),
+            "recall": round(r, 4),
+            "f1": round(f, 4),
+            "support": counts[t]["support"],
+        }
+
+    # Macro - unweighted mean of per-tag F1.
+    if macro_over_supprt_only:
+        f1s = [per_tag[t]["f1"] for t in tags if per_tag[t]["support"] > 0]
+    else:
+        f1s = [per_tag[t]["f1"] for t in tags]
+    macro_f1 = sum(f1s) / len(f1s) if f1s else 0.0
+
+    # Micro - pool every count then one P/R/F1.
+    tp = sum(counts[t]["tp"] for t in tags)
+    fp = sum(counts[t]["fp"] for t in tags)
+    fn = sum(counts[t]["fn"] for t in tags)
+    _, _, micro_f1 = _prf(tp, fp, fn)
+
+    # Hamming loss - fraction of (ticket, tag) pairs predicted incorrectly.
+    n_cells = len(y_true) * len(tags)
+    wrong_cells = sum(counts[t]["fp"] + counts[t]["fn"] for t in tags)
+    hamming = wrong_cells / n_cells if n_cells else 0.0
+
+    # Subset accuracy - fraction of tickets where predicted set == true set
+    exact = sum(
+        1
+        for true_row, pred_row in zip(y_true, y_pred)
+        if set(true_row) == set(pred_row)
+    )
+    subset_acc = exact / len(y_true) if y_true else 0.0
+
+    return {
+        "macro_f1": round(macro_f1, 4),
+        "micro_f1": round(micro_f1, 4),
+        "hamming_loss": round(hamming, 4),
+        "subset_accuracy": round(subset_acc, 4),
+        "n_tickets": len(y_true),
+        "per_tag": per_tag,
+    }
