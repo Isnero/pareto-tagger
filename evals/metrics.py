@@ -51,7 +51,7 @@ def _prf(tp, fp, fn):
     return precision, recall, f1
 
 
-def compute_metrics(y_true, y_pred, tags, macro_over_supprt_only=False):
+def compute_metrics(y_true, y_pred, tags, macro_over_support_only=False):
     """Multi-label metrics. Returns a dict with macro_f1 first.
     y_true, y_pred: equal-length lists of tag-name lists, aligned by ticket.
     tags: the taxonomy, an ordered list of valid tag names.
@@ -78,7 +78,7 @@ def compute_metrics(y_true, y_pred, tags, macro_over_supprt_only=False):
         }
 
     # Macro - unweighted mean of per-tag F1.
-    if macro_over_supprt_only:
+    if macro_over_support_only:
         f1s = [per_tag[t]["f1"] for t in tags if per_tag[t]["support"] > 0]
     else:
         f1s = [per_tag[t]["f1"] for t in tags]

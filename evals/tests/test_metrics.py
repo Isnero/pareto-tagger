@@ -36,7 +36,7 @@ def test_one_missed_tag():
 
 def test_macro_micro_diverge_on_imbalance():
     # Same predictions two stories. Common is frequent and perfect, rare is infrequent and missed. This is the reason macro is the gate.
-    tags = ["common", "rare"]
+    tags = ["Common", "Rare"]
     y_true = [["Common"], ["Common"], ["Common"], ["Common", "Rare"]]
     y_pred = [["Common"], ["Common"], ["Common"], ["Common"]]
     m = compute_metrics(y_true, y_pred, tags)
@@ -66,12 +66,12 @@ def test_false_positive_penalised():
 
 
 def test_length_mismatch_raises():
-    with pytest.raises(ValueError, match="length mismatch"):
+    with pytest.raises(ValueError, match="Length mismatch"):
         compute_metrics([["A"]], [["A"], ["B"]], ["A", "B"])
 
 
 def test_empty_raises():
-    with pytest.raises(ValueError, match="empty"):
+    with pytest.raises(ValueError, match="Empty"):
         compute_metrics([], [], ["A", "B"])
 
 
